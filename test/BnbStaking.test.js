@@ -14,7 +14,7 @@ contract('BnbStaking.......', async ([alice, bob, admin, dev, minter]) => {
     this.wBNB = await WBNB.new({ from: minter });
     this.bnbChef = await BnbStaking.new(
       this.wBNB.address,
-      this.rewardToken.address,
+      this.rewardToken.address,  
       1000,
       10,
       1010,
@@ -86,7 +86,7 @@ contract('BnbStaking.......', async ([alice, bob, admin, dev, minter]) => {
   });
 
   it('setLimitAmount', async () => {
-    // set limit to 1e-12 BNB
+    // set limit to 1e-12 BNB..
     await this.bnbChef.setLimitAmount('1000000', { from: minter });
     await expectRevert(
       this.bnbChef.deposit({ from: alice, value: 100000000 }),

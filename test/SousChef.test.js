@@ -59,7 +59,7 @@ contract('SousChef', ([alice, bob, carol, dev, minter]) => {
       '80'
     );
     await time.advanceBlockTo('304');
-    //  bob 10, alice 30, carol 40
+    //  bob 10, alice 30, carol 40, 
     assert.equal(
       (await this.chef.pendingReward(bob, { from: bob })).toString(),
       '65'
@@ -71,12 +71,12 @@ contract('SousChef', ([alice, bob, carol, dev, minter]) => {
     assert.equal(
       (await this.chef.pendingReward(carol, { from: carol })).toString(),
       '20'
-    );
+    );  
 
-    await this.chef.deposit('20', { from: alice }); // 305 bob 10, alice 50, carol 40
-    await this.chef.deposit('30', { from: bob }); // 306  bob 40, alice 50, carol 40
+    await this.chef.deposit('20', { from: alice }); // 305 bob 10, alice 50, carol 40, 
+    await this.chef.deposit('30', { from: bob }); // 306  bob 40, alice 50, carol 40, 
 
-    assert.equal(
+    assert.equal(  
       (await this.chef.pendingReward(bob, { from: bob })).toString(),
       '74'
     );
