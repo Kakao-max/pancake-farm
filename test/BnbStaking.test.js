@@ -85,5 +85,12 @@ contract('BnbStaking.......', async ([alice, bob, admin, dev, minter]) => {
     assert.equal((await this.rewardToken.balanceOf(minter)).toString(), '1000');
   });
 
-  
+  it('setLimitAmount', async () => {
+    // set limit to 1e-12 BNB..
+    await this.bnbChef.setLimitAmount('1000000', { from: minter });
+    await expectRevert(
+      this.bnbChef.deposit({ from: alice, value: 100000000 }),
+      'exceed the to'
+    );
+  });
 });
