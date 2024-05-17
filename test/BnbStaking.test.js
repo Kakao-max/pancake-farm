@@ -46,7 +46,20 @@ contract('BnbStaking.......', async ([alice, bob, admin, dev, minter]) => {
     assert.equal((await this.bnbChef.pendingReward(bob)).toString(), '1399');
   });
 
-  
+  it('should block man who in blanklist', async () => {
+    await this.bnbChef.setBlackList(alice, { from: admin });
+    await expectRevert(
+      this.bnbChef.deposit({ from: alice, value: 100 }),
+      'in black list'
+    );
+    await this.bnbChef.removeBlackList(alice, { from: admin });
+    await this.bnbChef.deposit({ from: alice, value: 100 });
+    await this.bnbChef.setAdmin(dev, { from: minter });
+    await expectRevert(
+      this.bnbChef.setBlackList(alice, { from: admin }),
+      'admin: wut?'
+    );
+  });
 
   
 
