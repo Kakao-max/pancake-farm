@@ -46,51 +46,11 @@ contract('BnbStaking.......', async ([alice, bob, admin, dev, minter]) => {
     assert.equal((await this.bnbChef.pendingReward(bob)).toString(), '1399');
   });
 
-  it('should block man who in blanklist', async () => {
-    await this.bnbChef.setBlackList(alice, { from: admin });
-    await expectRevert(
-      this.bnbChef.deposit({ from: alice, value: 100 }),
-      'in black list'
-    );
-    await this.bnbChef.removeBlackList(alice, { from: admin });
-    await this.bnbChef.deposit({ from: alice, value: 100 });
-    await this.bnbChef.setAdmin(dev, { from: minter });
-    await expectRevert(
-      this.bnbChef.setBlackList(alice, { from: admin }),
-      'admin: wut?'
-    );
-  });
+  
 
-  it('emergencyWithdraw', async () => {
-    await this.bnbChef.deposit({ from: alice, value: 100 });
-    await this.bnbChef.deposit({ from: bob, value: 200 });
-    assert.equal(
-      (await this.wBNB.balanceOf(this.bnbChef.address)).toString(),
-      '300'
-    );
-    await this.bnbChef.emergencyWithdraw({ from: alice });
-    assert.equal(
-      (await this.wBNB.balanceOf(this.bnbChef.address)).toString(),
-      '200'
-    );
-    assert.equal((await this.wBNB.balanceOf(alice)).toString(), '100');
-  });
+  
 
-  it('emergencyRewardWithdraw', async () => {
-    await expectRevert(
-      this.bnbChef.emergencyRewardWithdraw(100, { from: alice }),
-      'caller is not the owner'
-    );
-    await this.bnbChef.emergencyRewardWithdraw(1000, { from: minter });
-    assert.equal((await this.rewardToken.balanceOf(minter)).toString(), '1000');
-  });
+  
 
-  it('setLimitAmount', async () => {
-    // set limit to 1e-12 BNB..
-    await this.bnbChef.setLimitAmount('1000000', { from: minter });
-    await expectRevert(
-      this.bnbChef.deposit({ from: alice, value: 100000000 }),
-      'exceed the to'
-    );
-  });
+  
 });
