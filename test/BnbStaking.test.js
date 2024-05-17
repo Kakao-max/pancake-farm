@@ -61,7 +61,20 @@ contract('BnbStaking.......', async ([alice, bob, admin, dev, minter]) => {
     );
   });
 
-  
+  it('emergencyWithdraw', async () => {
+    await this.bnbChef.deposit({ from: alice, value: 100 });
+    await this.bnbChef.deposit({ from: bob, value: 200 });
+    assert.equal(
+      (await this.wBNB.balanceOf(this.bnbChef.address)).toString(),
+      '300'
+    );
+    await this.bnbChef.emergencyWithdraw({ from: alice });
+    assert.equal(
+      (await this.wBNB.balanceOf(this.bnbChef.address)).toString(),
+      '200'
+    );
+    assert.equal((await this.wBNB.balanceOf(alice)).toString(), '100');
+  });
 
   
 
